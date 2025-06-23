@@ -28,6 +28,10 @@ export class UsuarioService {
         return await this.usuarioModel.findByIdAndUpdate(id, { ...dto });
     }
 
+    async deleteUsuario(id: string){
+        await this.usuarioModel.findByIdAndDelete(id)
+    }
+
     async createUsuario(dto: UsuarioInputDto) {
         const { email, username } = dto;
 
