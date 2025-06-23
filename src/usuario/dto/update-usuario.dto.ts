@@ -1,10 +1,6 @@
-import { IsEmail, IsNotEmpty, IsString } from "class-validator";
+import { IsNotEmpty, IsString } from "class-validator";
 
-export class UpdateUsuarioInputDto {
-    // @IsNotEmpty({message: "username não pode estar vazio"})
-    // @IsString()
-    // username: string;
-
+export class UpdateNomeInputDto {
     @IsNotEmpty({message: "nome não pode estar vazio"})
     @IsString()
     nome: string;

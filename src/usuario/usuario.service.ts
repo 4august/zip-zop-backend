@@ -3,7 +3,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Usuario } from "./usuario.schema";
 import { Model } from "mongoose";
 import { UsuarioInputDto } from "./dto/create-usuario.dto";
-import { UpdateUsuarioInputDto } from "./dto/update-usuario.dto";
+import { UpdateNomeInputDto } from "./dto/update-usuario.dto";
 
 @Injectable()
 export class UsuarioService {
@@ -19,6 +19,10 @@ export class UsuarioService {
         return await this.usuarioModel.find({ $or: [{ email }, { username }] })
     }
 
+    async handleUpdateUsuario(dto, id: string) {
+        return await this.usuarioModel.findByIdAndUpdate(id, { ...dto })
+    }
+
     async createUsuario(dto: UsuarioInputDto) {
         const { email, username } = dto;
 
@@ -30,8 +34,7 @@ export class UsuarioService {
         return usuario.save()
     }
 
-    async updateUsuario(dto: UpdateUsuarioInputDto, id: string){
-        
-        return await this.usuarioModel.findByIdAndUpdate(id, {...dto})
+    async updateName(dto: UpdateNomeInputDto, id: string) {
+        return await this.handleUpdateUsuario(dto, id)
     }
 }

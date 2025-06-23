@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post, Put } from "@nestjs/common";
 import { UsuarioService } from "./usuario.service";
 import { UsuarioInputDto } from "./dto/create-usuario.dto";
-import { UpdateUsuarioInputDto } from "./dto/update-usuario.dto";
+import { UpdateNomeInputDto } from "./dto/update-usuario.dto";
 
 @Controller('usuario')
 export class UsuarioController {
@@ -18,7 +18,7 @@ export class UsuarioController {
     }
 
     @Put("/:id")
-    updateUser(@Body() req: UpdateUsuarioInputDto, @Param("id") id: string) {
-        return this.usuarioService.updateUsuario(req, id)
+    updateUser(@Body() req: UpdateNomeInputDto, @Param("id") id: string) {
+        return this.usuarioService.updateName(req, id)
     }
 }
