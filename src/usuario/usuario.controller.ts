@@ -1,13 +1,15 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
 import { UsuarioService } from "./usuario.service";
 import { UsuarioInputDto } from "./dto/create-usuario.dto";
 import { UpdateNomeInputDto } from "./dto/update-nome-usuario.dto";
 import { UpdateUsernameInputDto } from "./dto/update-username-usuario.dto";
+import { AuthGuard } from "src/auth/auth.guard";
 
 @Controller('usuario')
 export class UsuarioController {
     constructor(private readonly usuarioService: UsuarioService) { }
 
+    @UseGuards(AuthGuard)
     @Get()
     listarUsuarios() {
         return this.usuarioService.listarUsuarios()
@@ -29,7 +31,7 @@ export class UsuarioController {
     }
 
     @Delete(":id")
-    deleteUser(@Param("id") id: string){
+    deleteUser(@Param("id") id: string) {
         return this.usuarioService.deleteUsuario(id)
     }
 }

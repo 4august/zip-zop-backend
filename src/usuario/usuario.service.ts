@@ -5,6 +5,7 @@ import { Model } from "mongoose";
 import { UsuarioInputDto } from "./dto/create-usuario.dto";
 import { UpdateNomeInputDto } from "./dto/update-nome-usuario.dto";
 import { UpdateUsernameInputDto } from "./dto/update-username-usuario.dto";
+import { UsarioOutputDto } from "./dto/usuario-output.dto";
 
 @Injectable()
 export class UsuarioService {
@@ -16,19 +17,19 @@ export class UsuarioService {
         return await this.usuarioModel.find()
     }
 
-    async findByEmailOrUsername(email: string, username: string) {
-        const usuario = await this.usuarioModel.find({ $or: [{ email }, { username }] });
+    async findByEmailOrUsername(email: string, username: string): Promise<UsarioOutputDto > {
+        const usuario = await this.usuarioModel.findOne({ $or: [{ email }, { username }] })
 
-        if (usuario.length > 0) throw new BadRequestException("Usuário com username ou email já encontrado")
+        if (!!usuario) return usuario
 
-        return usuario
+        return {} as UsarioOutputDto
     }
 
     async handleUpdateUsuario(dto, id: string) {
         return await this.usuarioModel.findByIdAndUpdate(id, { ...dto });
     }
 
-    async deleteUsuario(id: string){
+    async deleteUsuario(id: string) {
         await this.usuarioModel.findByIdAndDelete(id)
     }
 
@@ -37,7 +38,7 @@ export class UsuarioService {
 
         const usuarioExiste = await this.findByEmailOrUsername(email, username)
 
-        if (usuarioExiste == null) return usuarioExiste
+        if (!!usuarioExiste) throw new BadRequestException("Usuário com username ou email já encontrado")
 
         const usuario = new this.usuarioModel(dto);
         return usuario.save()
