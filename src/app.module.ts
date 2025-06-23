@@ -2,10 +2,18 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
+import { UsuarioModule } from './usuario/usuario.module';
+
 
 @Module({
-  imports: [ MongooseModule.forRoot("mongodb+srv://contatoaugustoabreu:ruEIIUCaB9x2N9xb@cluster0.ql8k000.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")],
+  imports: [
+    ConfigModule.forRoot({ envFilePath: '.env' }),
+    MongooseModule.forRoot(process.env.DB_CONECCTION ?? ""),
+    UsuarioModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule { }
+
