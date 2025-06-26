@@ -5,7 +5,6 @@ import { UsuarioService } from 'src/usuario/usuario.service';
 @Injectable()
 export class AuthService {
     constructor(
-
         private usuarioService: UsuarioService,
         private readonly jwtService: JwtService
     ) { }
@@ -16,8 +15,8 @@ export class AuthService {
     ){
         const user = await this.usuarioService.findByEmailOrUsername(username, username);
 
-        if (!!user && user.senha !== pass) {
-            throw new UnauthorizedException();
+        if (!user || user.senha !== pass) {
+            throw new UnauthorizedException("Usuário não encontrado ou senha incorreta");
         }
         const payload = { username: user.username };
         

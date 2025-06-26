@@ -5,6 +5,7 @@ import { UpdateNomeInputDto } from "./dto/update-nome-usuario.dto";
 import { UpdateUsernameInputDto } from "./dto/update-username-usuario.dto";
 import { AuthGuard } from "src/auth/auth.guard";
 import { JwtAuthGuard } from "src/auth/strategy/jwt/jwt.guard";
+import { Public } from "src/auth/decorators/public.decorator";
 
 @Controller('usuario')
 export class UsuarioController {
@@ -15,7 +16,8 @@ export class UsuarioController {
     listarUsuarios() {
         return this.usuarioService.listarUsuarios()
     }
-
+    
+    @Public()
     @Post()
     createUser(@Body() req: UsuarioInputDto) {
         return this.usuarioService.createUsuario(req)

@@ -17,13 +17,6 @@ export class UsuarioService {
         return await this.usuarioModel.find()
     }
 
-    async findByEmailOrUsername(email: string, username: string): Promise<UsarioOutputDto > {
-        const usuario = await this.usuarioModel.findOne({ $or: [{ email }, { username }] })
-
-        if (!!usuario) return usuario
-
-        return {} as UsarioOutputDto
-    }
 
     async handleUpdateUsuario(dto, id: string) {
         return await this.usuarioModel.findByIdAndUpdate(id, { ...dto });
@@ -32,13 +25,19 @@ export class UsuarioService {
     async deleteUsuario(id: string) {
         await this.usuarioModel.findByIdAndDelete(id)
     }
+    async findByEmailOrUsername(email: string, username: string): Promise<UsarioOutputDto | null> {
+
+
+
+        return await this.usuarioModel.findOne({ $or: [{ email }, { username }] })
+    }
 
     async createUsuario(dto: UsuarioInputDto) {
         const { email, username } = dto;
 
         const usuarioExiste = await this.findByEmailOrUsername(email, username)
 
-        if (!!usuarioExiste) throw new BadRequestException("Usuário com username ou email já encontrado")
+        if (usuarioExiste) throw new BadRequestException("Usuário com username ou email já encontrado")
 
         const usuario = new this.usuarioModel(dto);
         return usuario.save()
