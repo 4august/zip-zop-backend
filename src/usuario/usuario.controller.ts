@@ -36,7 +36,6 @@ export class UsuarioController {
         return this.usuarioService.deleteUsuario(id)
     }
 
-    @UseGuards(JwtAuthGuard)
     @Get('/profile')
     getProfile(@Request() req) {
         return req.user;
