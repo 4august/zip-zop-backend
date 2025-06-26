@@ -1,9 +1,10 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, Request } from "@nestjs/common";
 import { UsuarioService } from "./usuario.service";
 import { UsuarioInputDto } from "./dto/create-usuario.dto";
 import { UpdateNomeInputDto } from "./dto/update-nome-usuario.dto";
 import { UpdateUsernameInputDto } from "./dto/update-username-usuario.dto";
 import { AuthGuard } from "src/auth/auth.guard";
+import { JwtAuthGuard } from "src/auth/strategy/jwt/jwt.guard";
 
 @Controller('usuario')
 export class UsuarioController {
@@ -33,5 +34,11 @@ export class UsuarioController {
     @Delete(":id")
     deleteUser(@Param("id") id: string) {
         return this.usuarioService.deleteUsuario(id)
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Get('/profile')
+    getProfile(@Request() req) {
+        return req.user;
     }
 }
