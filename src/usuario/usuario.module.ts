@@ -1,0 +1,25 @@
+import { Module } from '@nestjs/common';
+
+import { UsuarioController } from './usuario.controller';
+import { UsuarioService } from './usuario.service';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Usuario, UsuarioSchema } from './usuario.schema';
+import { JwtService } from '@nestjs/jwt';
+
+@Module({
+  imports: [
+    MongooseModule.forFeature([
+      {
+        name: Usuario.name,
+        schema: UsuarioSchema,
+      }   
+    ])
+  ],
+  controllers: [UsuarioController],
+  providers: [
+    UsuarioService,
+    JwtService
+  ],
+  exports: [UsuarioService]
+})
+export class UsuarioModule { }
