@@ -18,10 +18,10 @@ export class AuthService {
         if (!user || user.senha !== pass) {
             throw new UnauthorizedException("Usuário não encontrado ou senha incorreta");
         }
-        const payload = { username: user.username };
-        
+        const {senha, ...rest} = user.toObject()
+
         return {
-            access_token: await this.jwtService.signAsync(payload),
+            access_token: await this.jwtService.signAsync({...rest}),
         };
     }
 }

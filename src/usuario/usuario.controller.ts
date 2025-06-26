@@ -16,7 +16,7 @@ export class UsuarioController {
     listarUsuarios() {
         return this.usuarioService.listarUsuarios()
     }
-    
+
     @Public()
     @Post()
     createUser(@Body() req: UsuarioInputDto) {
