@@ -4,7 +4,6 @@ import { Public } from './decorators/public.decorator';
 
 @Controller()
 export class AuthController {
-
     @Public()
     @UseGuards(LocalAuthGuard)
     @Post("/login")

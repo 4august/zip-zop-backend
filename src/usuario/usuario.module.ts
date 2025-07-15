@@ -12,14 +12,11 @@ import { JwtService } from '@nestjs/jwt';
       {
         name: Usuario.name,
         schema: UsuarioSchema,
-      }   
+      }
     ])
   ],
   controllers: [UsuarioController],
-  providers: [
-    UsuarioService,
-    JwtService
-  ],
+  providers: [UsuarioService, JwtService],
   exports: [UsuarioService]
 })
 export class UsuarioModule { }
