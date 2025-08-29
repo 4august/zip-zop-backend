@@ -7,12 +7,15 @@ import { UsuarioModule } from './usuario/usuario.module';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/strategy/jwt/jwt.guard';
+import { ChatGateway } from './chat/chat.gateway';
+import { ChatModule } from './chat/chat.module';
 
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRoot(process.env.DB_CONECCTION ?? ""),
+    ChatModule,
     UsuarioModule,
     AuthModule,
   ],
@@ -20,9 +23,10 @@ import { JwtAuthGuard } from './auth/strategy/jwt/jwt.guard';
   providers: [
     AppService,
     {
-    provide: APP_GUARD,
-    useClass: JwtAuthGuard,
-  },
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    },
+    ChatGateway,
   ],
 })
 export class AppModule { }

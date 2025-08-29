@@ -1,11 +1,17 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { Server } from "socket.io"
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  const io = new Server();
+  io.on('connection', (socket) => {
+    console.log('a user connected');
+  });
+
   app.enableCors({
-    origin: ["http://localhost:5173",'*'],
+    origin: ["http://localhost:5173", '*'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });
