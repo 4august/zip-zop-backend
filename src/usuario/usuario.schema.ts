@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Types } from "mongoose";
 
 @Schema({ versionKey: false })
 export class Usuario {
@@ -13,6 +14,9 @@ export class Usuario {
 
     @Prop({ required: true })
     senha: string
+
+    @Prop({ type: [{ type: Types.ObjectId, ref: 'Chat' }] })
+    chats: Types.ObjectId[];
 
     @Prop({ select: false })
     __v: number;

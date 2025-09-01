@@ -9,12 +9,14 @@ import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './auth/strategy/jwt/jwt.guard';
 import { ChatGateway } from './chat/chat.gateway';
 import { ChatModule } from './chat/chat.module';
+import { MessageModule } from './message/message.module';
 
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRoot(process.env.DB_CONECCTION ?? ""),
+    MessageModule,
     ChatModule,
     UsuarioModule,
     AuthModule,

@@ -33,10 +33,10 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
         client.emit('previousMessages', messages.reverse());
     }
 
-    @SubscribeMessage('sendMessage')
-    async handleMessage(_, payload: CreateMessageDto) {
-        const savedMessage = await this.chatService.create(payload);
-
-        this.server.to(payload.room).emit('newMessage', savedMessage);
-    }
+    /* @SubscribeMessage('sendMessage')
+     async handleMessage(_, payload: CreateMessageDto) {
+         const savedMessage = await this.chatService.create(payload);
+ 
+         this.server.to(payload.room).emit('newMessage', savedMessage);
+     }*/
 }
